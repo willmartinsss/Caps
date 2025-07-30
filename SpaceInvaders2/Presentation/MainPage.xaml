@@ -2,39 +2,21 @@
     x:Class="SpaceInvaders.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Background="#000">
+    Background="#003"
+    Width="1080"
+    Height="920">
 
     <Canvas x:Name="GameCanvas"
             KeyDown="Page_KeyDown"
             KeyUp="Page_KeyUp"
             IsTabStop="True"
-            Background="#000">
-
+            Background="#003">
 
         <Rectangle x:Name="PlayerShip"
-                   Width="40" Height="20"
-                   Fill="#00FF00"
+                   Width="40" Height="60"
+                   Fill="#098"
                    Canvas.Left="380"
-                   Canvas.Top="550"/>
-
-        <Rectangle x:Name="Shield"
-                   Width="120" Height="20"
-                   Fill="#5AFA84"
-                   Canvas.Left="150"
-                   Canvas.Top="450"></Rectangle>
-
-        <Rectangle x:Name="Shield2"
-                   Width="120" Height="20"
-                   Fill="#5AFA84"
-                   Canvas.Left="350"
-                   Canvas.Top="450"></Rectangle>
-
-        <Rectangle x:Name="Shield3"
-                   Width="120" Height="20"
-                   Fill="#5AFA84"
-                   Canvas.Left="550"
-                   Canvas.Top="450"></Rectangle>
-
+                   Canvas.Top="520"/>
 
     </Canvas>
 </Page>

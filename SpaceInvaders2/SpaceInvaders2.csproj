@@ -37,5 +37,8 @@
             SkiaRenderer;
         </UnoFeatures>
     </PropertyGroup>
+    <ItemGroup>
+      <Folder Include="Assets\sound\" />
+    </ItemGroup>
 
 </Project>
