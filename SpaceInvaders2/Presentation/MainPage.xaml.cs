@@ -205,7 +205,7 @@ public sealed partial class MainPage : Page
         Canvas.SetTop(gameOverText, 250);
         GameCanvas.Children.Add(gameOverText);
         
-        startButton.Content = "Jogar Novamente";
+        startButton.Content = "Jogar Denovo";
         Canvas.SetLeft(startButton, (this.ActualWidth - startButton.Width) / 2);
         Canvas.SetTop(startButton, 350);
         GameCanvas.Children.Add(startButton);
