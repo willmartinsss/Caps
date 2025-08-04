@@ -38,7 +38,7 @@
         </UnoFeatures>
     </PropertyGroup>
     <ItemGroup>
-      <Folder Include="Assets\sound\" />
+      <PackageReference Include="NAudio" />
     </ItemGroup>
 
 </Project>
