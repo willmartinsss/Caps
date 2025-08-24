@@ -33,25 +33,31 @@ public sealed partial class MainPage : Page
     private double _playerSpeed = 8;
     private bool isMovingLeft = false;
     private bool isMovingRight = false;
+    
     private DispatcherTimer? gameLoopTimer;
     private Rectangle? playerProjectile = null;
+    
     private List<Rectangle> shieldParts = new List<Rectangle>();
     private List<Rectangle> enemies = new List<Rectangle>();
+    
     private TextBlock? scoreText;
     private int score = 0;
     private Rectangle? specialEnemy;
     private DispatcherTimer? specialEnemyTimer;
     private double specialEnemySpeed = 3;
+    
     private TextBlock? titleText;
     private TextBlock? gameOverText;
     private StackPanel? titlePanel;
     private StackPanel? scoreLegendPanel;
     private StackPanel? menuButtonsPanel;
+    
     private IWavePlayer outputDevice;
     private AudioFileReader audioFile;
+    
     private Button? startButton;
     private Button? playAgainButton;
-    private int playerLives;
+    
     private StackPanel? livesPanel;
     private ImageBrush? alienSkin10;
     private ImageBrush? alienSkin20;
@@ -103,7 +109,6 @@ public sealed partial class MainPage : Page
 
     private void SetupUI()
     {
-        // Placar
         scoreText = new TextBlock
         {
             Text = "PONTOS: 0",
@@ -114,7 +119,6 @@ public sealed partial class MainPage : Page
         Canvas.SetTop(scoreText, 10);
         GameCanvas.Children.Add(scoreText);
 
-        // Painel de Vidas
         livesPanel = new StackPanel
         {
             Orientation = Orientation.Horizontal,
@@ -122,7 +126,6 @@ public sealed partial class MainPage : Page
         };
         GameCanvas.Children.Add(livesPanel);
 
-        // Painel para o título (SPACE INVADERS)
         titlePanel = new StackPanel { Spacing = -15 };
         var titleText1 = new TextBlock
         {
@@ -141,14 +144,12 @@ public sealed partial class MainPage : Page
         titlePanel.Children.Add(titleText1);
         titlePanel.Children.Add(titleText2);
 
-        // Painel para a legenda de pontos
         scoreLegendPanel = new StackPanel { Spacing = 10 };
         scoreLegendPanel.Children.Add(CreateLegendLine(alienSkin10, "= 10 PTS"));
         scoreLegendPanel.Children.Add(CreateLegendLine(alienSkin20, "= 20 PTS"));
         scoreLegendPanel.Children.Add(CreateLegendLine(alienSkin40, "= 40 PTS"));
         scoreLegendPanel.Children.Add(CreateLegendLine(specialAlienSkin, "= ??? PTS"));
 
-        // Painel para os botões do menu
         menuButtonsPanel = new StackPanel { Spacing = 10 };
         var startButton = new Button
         {
@@ -172,7 +173,6 @@ public sealed partial class MainPage : Page
 
         menuButtonsPanel.Children.Add(startButton);
 
-        // Texto de Fim de Jogo
         gameOverText = new TextBlock
         {
             Text = "VOCÊ VENCEU!", // Texto padrão
@@ -222,25 +222,21 @@ public sealed partial class MainPage : Page
     {
         currentState = GameState.Menu;
 
-        // Centraliza o título
         titlePanel.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
         Canvas.SetLeft(titlePanel, (this.ActualWidth - titlePanel.DesiredSize.Width) / 2);
         Canvas.SetTop(titlePanel, 100);
         GameCanvas.Children.Add(titlePanel);
 
-        // Centraliza a legenda
         scoreLegendPanel.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
         Canvas.SetLeft(scoreLegendPanel, (this.ActualWidth - scoreLegendPanel.DesiredSize.Width) / 2);
         Canvas.SetTop(scoreLegendPanel, 300);
         GameCanvas.Children.Add(scoreLegendPanel);
 
-        // Centraliza os botões
         menuButtonsPanel.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
         Canvas.SetLeft(menuButtonsPanel, (this.ActualWidth - menuButtonsPanel.DesiredSize.Width) / 2);
         Canvas.SetTop(menuButtonsPanel, 500);
         GameCanvas.Children.Add(menuButtonsPanel);
 
-        // Esconde os elementos do jogo
         PlayerShip.Visibility = Visibility.Collapsed;
         scoreText.Visibility = Visibility.Collapsed;
         if (livesPanel != null) livesPanel.Visibility = Visibility.Collapsed;
@@ -273,8 +269,6 @@ public sealed partial class MainPage : Page
             GameCanvas.Children.Remove(part);
         }
         
-        playerLives = 3;
-        UpdateLivesDisplay();
         if (livesPanel != null) livesPanel.Visibility = Visibility.Visible;
         
         shieldParts.Clear();
@@ -320,7 +314,6 @@ public sealed partial class MainPage : Page
         Canvas.SetTop(gameOverText, 250);
         GameCanvas.Children.Add(gameOverText);
         
-        // Mostra o botão de "Jogar Novamente"
         playAgainButton.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
         Canvas.SetLeft(playAgainButton, (this.ActualWidth - playAgainButton.DesiredSize.Width) / 2);
         Canvas.SetTop(playAgainButton, 350);
@@ -381,15 +374,13 @@ public sealed partial class MainPage : Page
         int shieldBlockSize = 10;
         int numberOfShields = 3;
         
-        // O novo escudo tem 7 blocos de largura e 5 de altura
         int shieldGridWidth = 7; 
         int shieldGridHeight = 5;
 
         double shieldPixelWidth = shieldGridWidth * shieldBlockSize;
-        double shieldSpacing = 180; // Espaço entre os escudos
+        double shieldSpacing = 180; 
         double shieldBaseY = 450;
 
-        // Calcula a largura total para centralizar o grupo de escudos
         double totalShieldsWidth = (numberOfShields * shieldPixelWidth) + ((numberOfShields - 1) * shieldSpacing);
         double startX = (this.ActualWidth - totalShieldsWidth) / 2;
 
@@ -397,7 +388,6 @@ public sealed partial class MainPage : Page
         {
             double shieldBaseX = startX + i * (shieldPixelWidth + shieldSpacing);
 
-            // Desenha cada escudo bloco por bloco com base na nova grelha
             for (int row = 0; row < shieldGridHeight; row++)
             {
                 for (int col = 0; col < shieldGridWidth; col++)
@@ -455,7 +445,7 @@ public sealed partial class MainPage : Page
 
             if (CheckCollision(projectileRect, shieldPartRect))
             {
-                PlaySound("invaderkilled.wav"); 
+                PlaySound("invaderkilled.wav"); //alterar para services e deixa pre carregado
                 GameCanvas.Children.Remove(part);
                 shieldParts.RemoveAt(i);
                 RemoveProjectile();
@@ -547,7 +537,6 @@ public sealed partial class MainPage : Page
             scoreText.Text = $"PONTOS: {score}";
         }
 
-        // Condição de vitória
         if (score >= 500)
         {
             ShowGameOver(true);
@@ -642,27 +631,5 @@ public sealed partial class MainPage : Page
         {
             Debug.WriteLine($"Erro ao tocar som '{soundFileName}': {ex.Message}");
         }
-    }
-    
-    private void UpdateLivesDisplay()
-    {
-        if (livesPanel == null) return;
-        
-        livesPanel.Children.Clear();
-        Canvas.SetTop(livesPanel, 10);
-        
-        for (int i = 0; i < playerLives; i++)
-        {
-            var lifeIcon = new Rectangle
-            {
-                Width = 30,
-                Height = 15,
-                Fill = PlayerShip.Fill
-            };
-            livesPanel.Children.Add(lifeIcon);
-        }
-        
-        livesPanel.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
-        Canvas.SetLeft(livesPanel, this.ActualWidth - livesPanel.DesiredSize.Width - 10);
     }
 }
