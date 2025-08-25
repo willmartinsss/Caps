@@ -79,7 +79,7 @@ public sealed partial class MainPage : Page
 
     // --- Recursos Visuais e de Áudio ---
     private ImageBrush? alienSkin10, alienSkin20, alienSkin40, specialAlienSkin, playerSkin;
-    private MediaPlayer? mediaPlayer; // Usaremos MediaPlayer para os sons
+    private MediaPlayer? mediaPlayer;
 
     public MainPage()
     {
@@ -101,7 +101,7 @@ public sealed partial class MainPage : Page
 
         // Inicia o loop principal do jogo
         gameLoopTimer = new DispatcherTimer();
-        gameLoopTimer.Interval = TimeSpan.FromMilliseconds(16); // Aproximadamente 60 FPS
+        gameLoopTimer.Interval = TimeSpan.FromMilliseconds(16); // 60 FPS
         gameLoopTimer.Tick += GameLoop;
         gameLoopTimer.Start();
     }
@@ -587,7 +587,7 @@ public sealed partial class MainPage : Page
         UpdateLivesDisplay();
         PlayerShip.Fill = playerSkin;
         Canvas.SetLeft(PlayerShip, (this.ActualWidth - PlayerShip.Width) / 2);
-        Canvas.SetTop(PlayerShip, this.ActualHeight - PlayerShip.Height - 40); // Posiciona a nave perto da parte inferior
+        Canvas.SetTop(PlayerShip, this.ActualHeight - PlayerShip.Height - 40); 
 
         // Inicia os timers
         SetupTimers();
@@ -720,7 +720,7 @@ public sealed partial class MainPage : Page
             {
                 playerLives++;
                 UpdateLivesDisplay();
-                PlaySound("extraShip.wav"); // Som para vida extra
+                PlaySound("extraShip.wav");
             }
         }
     }
@@ -759,7 +759,6 @@ public sealed partial class MainPage : Page
         }
         else
         {
-            // Muda a cor para indicar dano
             switch (health)
             {
                 case 2: shieldPart.Fill = new SolidColorBrush(Colors.YellowGreen); break;
@@ -799,7 +798,7 @@ public sealed partial class MainPage : Page
         if (playerProjectile == null) return;
         GameCanvas.Children.Remove(playerProjectile);
         playerProjectile = null;
-        canShoot = true; // Permite atirar novamente
+        canShoot = true; // Permite atirar novamente, voltou a funcionar by will
     }
 
     private void RemoveSpecialEnemy()
